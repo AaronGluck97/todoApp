@@ -1,0 +1,80 @@
+
+
+.checkBox{
+    
+}
+
+.dates{
+    font-size: .6em;
+    font-style: italic;
+    align-self: self-end;
+    color: gray;
+}
+.todoText{
+    font-size: 1.2em;
+    flex-grow: 2;
+    width: 100%;
+    box-sizing: border-box;
+    align-self: self-end;
+    overflow-wrap:anywhere;
+}
+
+.buttonContainer{
+    display: grid;
+    gap: .5em;
+    scale: 1.5;
+    padding-right: .1em;
+    
+    
+}
+
+.checkBox{
+    cursor: pointer;
+}
+
+.bodyContainer{
+    display: grid;
+    grid-row: 90% 10%;
+    min-height: 5em;
+    text-wrap: wrap;
+    width: 100%;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: .5em;
+   /*text center is 2.5em*/
+}
+
+.todoCard,.doneCard{
+    display: flex;
+    min-height: 5em;
+    background-color: white;
+    color: black;
+    margin: 2px;
+    align-items: center;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.432);
+    text-align: left;
+
+    border-radius: 10px;
+    flex-basis: content;
+    max-width: 30em;
+    margin: auto;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    transition-duration: 1s;
+    &:hover{
+        background-color: cyan;
+        
+    }
+
+
+}
+
+.doneCard{
+    opacity: 50%;
+    background-color: lightblue;
+
+    .todoText{
+        text-decoration: line-through;
+    }
+}
+

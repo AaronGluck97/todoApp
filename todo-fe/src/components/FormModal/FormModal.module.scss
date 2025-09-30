@@ -1,0 +1,73 @@
+
+.module{
+    position:fixed;
+    z-index: 1;
+    align-self: center;
+    justify-self: center;
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    justify-content: space-evenly; 
+    border-radius: 45px;
+    box-shadow: 10px 10px 100px black, -10px -10px 100px black;
+}
+
+.todoMoc{
+    width: 90%;
+    display: flex;
+    min-height: 6em;
+    align-items: center;
+    text-align: left;
+    gap: 1em;
+    padding: 1em;
+    border-radius: 45px;
+    border: 2px solid lightgray;
+    flex-basis: content;
+    textarea{
+        height: 3em;
+        width: 100%;
+        
+        
+        
+    }
+}
+
+.buttonContainer{
+    display: flex;
+    gap: 2em;
+    scale: 1.5;
+}
+
+/*.module *{
+    max-width: 60%;
+}*/
+
+
+.primary{
+    color:white;
+    background-color: black;
+    padding: .5em;
+    &:hover{        
+        background-color: darkcyan;
+        transition-duration: .5s;
+        scale: 1;
+    }
+}
+
+
+.secondary{
+    border: 1px solid black;
+    padding: .5em;  
+    
+    &:hover{        
+        background-color: red;
+        border: 1px solid red;
+        color: white;
+        transition-duration: .5s;
+        scale: 1;
+    }
+}

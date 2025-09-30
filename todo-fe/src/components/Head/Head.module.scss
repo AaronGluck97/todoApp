@@ -1,0 +1,48 @@
+
+
+
+.header {  
+    
+    position: fixed;
+    z-index: 1;
+    align-self: center;
+    justify-self: center;
+    top: 2%;
+    
+    background-color: white;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.432);
+    border-radius: 45px;
+    max-width: 30em;
+    margin: auto;
+    margin-bottom: .5em;
+    display: grid;
+    grid-template-columns: 20fr 1fr;
+    align-items: center;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.432), -3px -3px 8px rgba(0, 0, 0, 0.432);;
+    .addNewButton{
+        justify-self: end;
+        align-self:center;
+        padding-right: 2em;
+        
+        button{
+            font-size: x-large;
+            color: gray;
+            &:hover{
+                scale:1.5;
+                color: black;
+            }
+        }
+    }
+    h1{
+        padding-left: .5em;
+    }
+
+    
+}
+
+.altHeader{
+    background-color: black;
+    color: white;
+    text-align: center;
+}
