@@ -9,12 +9,7 @@ import { text } from 'stream/consumers';
 import { CreateTodoRequest } from '../types/createTodoRequest';
 
 export class TodoDAL {
-  /**
-   * Get all todos from database ordered by created_at DESC
-   */
-
-  private td: ToDoDataChecker = ToDoDataChecker.getInstance();
-
+  //Get all todos from database ordered by created_at DESC
   async getAllTodos(): Promise<Todo[]> {
     return new Promise((resolve, reject) => {
       db.all("SELECT * FROM todos ORDER BY created_at DESC", (err: Error | null, rows: any[]) => {
@@ -47,46 +42,45 @@ export class TodoDAL {
       });
     });
   }
-  //new to do
-  async newTodo(newTodo: CreateTodoRequest): Promise<number> {
+
+  async newTodo(newTodo: CreateTodoRequest): Promise<Todo> {
     return new Promise((resolve, reject) => {
-      db.run("INSERT INTO todos (text) VALUES  (?)", this.td.text(newTodo.text), function (this: RunResult, err: Error | null) {
+      db.get("INSERT INTO todos (text) VALUES  (?) RETURNING *", newTodo.text, (err: Error | null, result: any) => {
         if (err) {
           console.error(err.message);
           reject(new TodoError(500, err.message));
           return;
         }
-        //ToDoDataChecker.getInstance().cacheLastId(this.lastID)
-        resolve(this.lastID);
+        resolve(result);
       });
     });
   }
-  async updateTodo(id: number, update: UpdateTodoRequest): Promise<number> {
+  async updateTodo(id: number, update: UpdateTodoRequest): Promise<Todo> {
     return new Promise((resolve, reject) => {
 
       const params: any[] = [
-        update.text != undefined ? this.td.text(update.text) : null,
+        update.text != undefined ? update.text : null,
         update.completed != undefined ? (update.completed ? 1 : 0) : null, id];
       if (params[0] == null && params[1] == null) {
         reject(new TodoError(400, 'Invalid Entry'));
         return;
       }
 
-      db.run(`UPDATE todos 
+      db.get(`UPDATE todos 
               SET text = coalesce((?), text), completed = coalesce((?), completed), updated_at = CURRENT_TIMESTAMP 
-              WHERE id = (?)`,
-        params, function (this: RunResult, err: Error | null) {
+              WHERE id = (?) RETURNING *`,
+        params, (err: Error | null, result: any) => {
           if (err) {
             console.error(err.message);
             reject(new TodoError(500, err.message));
             return;
           }
-          if (this.changes === 0) {
+          if (result == undefined) {
             console.error(`todo not found with id: ${id}`);
             reject(new TodoError(404, `todo not found with id: ${id}`));
             return;
           }
-          resolve(this.changes);
+          resolve(result);
         });
     });
   }

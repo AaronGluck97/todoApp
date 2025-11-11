@@ -31,7 +31,6 @@ export class TodoIntent {
   }
 
   //get todo by id
-
   async getTodoById(id: number): Promise<Todo> {
     try {
       const row = await this.todoDAL.getTodoById(id);
@@ -46,18 +45,8 @@ export class TodoIntent {
   //add new todo
   async newTodo(newTodo: CreateTodoRequest): Promise<Todo> {
     try {
-      const idNum = await this.todoDAL.newTodo(newTodo);
-
-      console.log(idNum);
-
-      const today = new Date().toISOString().slice(0, 19).replace('T', ' ');
-      const todo: Todo = {
-        id: idNum,
-        text: newTodo.text,
-        created_at: today,
-        updated_at: today,
-        completed: false
-      };
+      const row = await this.todoDAL.newTodo(newTodo);
+      const todo: Todo = { ...row, completed: Boolean(row.completed) };
       return todo;
     }
     catch (error: any) {
@@ -68,8 +57,9 @@ export class TodoIntent {
   //update todo
   async updateTodo(id: number, update: UpdateTodoRequest): Promise<Todo> {
     try {
-      const result = await this.todoDAL.updateTodo(id, update);
-      return await this.getTodoById(id);
+      const row = await this.todoDAL.updateTodo(id, update);
+      const todo: Todo = { ...row, completed: Boolean(row.completed) };
+      return todo;
     }
     catch (error: any) {
       throw error;
